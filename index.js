@@ -1,7 +1,10 @@
 const app = require('./app');
 const connection = require('./Config');
+const { setupRoutes } = require('./routes/router');
 
 const PORT = process.env.PORT || 8000;
+
+setupRoutes(app);
 
 connection.connect(function (err) {
   if (err) {
