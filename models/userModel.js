@@ -45,7 +45,7 @@ const getUserById = (id) => {
 const getAllUsersByRegion = (region) => {
     return db
         .query('SELECT * FROM user u WHERE region=?', [region])
-        .then(([results]) => results[0])
+        .then(([results]) => results)
 }
 
 const getOneUser = (email) => {

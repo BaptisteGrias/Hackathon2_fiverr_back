@@ -5,7 +5,7 @@ fiverrMeetRouter.get("/", (req, res) => {
 	const sqlFilters = [];
 
 	if (req.query && req.query.region) {
-		getFiverrMeetByRegion(req.query.region)
+		fiverrMeet.getAllFiverrMeetByRegion(req.query.region)
 			.then((results) => {
 				res.status(200).json(results);
 			})

@@ -9,7 +9,7 @@ userRouter.get("/", (req, res) => {
 	const sqlFilters = [];
 
 	if (req.query && req.query.region) {
-		getAllUsersByRegion(req.query.region)
+		user.getAllUsersByRegion(req.query.region)
 			.then((results) => {
 				res.status(200).json(results);
 			})
@@ -28,16 +28,6 @@ userRouter.get("/", (req, res) => {
 				res.status(500).send("Error fetch all users");
 			});
 	}
-
-	user
-		.getAllUsers()
-		.then((results) => {
-			res.status(200).json(results);
-		})
-		.catch((err) => {
-			console.log(err);
-			res.status(500).send("Error fetch all users");
-		});
 });
 
 userRouter.get("/:id", (req, res) => {
