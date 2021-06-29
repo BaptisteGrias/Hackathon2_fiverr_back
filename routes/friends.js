@@ -2,7 +2,7 @@ const friendRouter = require('express').Router();
 const user = require("../models/userModel");
 
 
-friendRouter.get('/', (res, req) => {
+friendRouter.get('/', (req, res) => {
   user.getAllFriends(req.params.id)
       .then((results) => {
           res.status(200).json(results);

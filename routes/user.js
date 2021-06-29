@@ -2,7 +2,7 @@ const userRouter = require('express').Router();
 const user = require("../models/userModel");
 
 
-userRouter.get('/', (res, req) => {
+userRouter.get('/', (req, res) => {
 
     const sqlFilters = [];
 
@@ -36,7 +36,7 @@ userRouter.get('/', (res, req) => {
         })
 });
 
-userRouter.get('/:id', (res, req) => {
+userRouter.get('/:id', (req, res) => {
     user.getUserById(req.params.id)
         .then((results) => {
             res.status(200).json(results);

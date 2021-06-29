@@ -12,7 +12,7 @@ messageRouter.post('/', (req, res) => {
         });
 });
 
-messageRouter.get('user/:id/duser/:duid', (res, req) => {
+messageRouter.get('user/:id/duser/:duid', (req, res) => {
     message.getMessages(req.params.id, req.params.duid)
         .then((results) => {
             res.status(200).json(results);

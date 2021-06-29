@@ -2,7 +2,7 @@ const fiverrMeetRouter = require('express').Router();
 const fiverrMeet = require("../models/fiverrMeetModel");
 
 
-fiverrMeetRouter.get('/', (res, req) => {
+fiverrMeetRouter.get('/', (req, res) => {
 
     const sqlFilters = [];
 
@@ -27,7 +27,7 @@ fiverrMeetRouter.get('/', (res, req) => {
     }
 });
 
-fiverrMeetRouter.get('/:id', (res, req) => {
+fiverrMeetRouter.get('/:id', (req, res) => {
     message.getFiverrMeetById(req.params.id)
         .then((results) => {
             res.status(200).json(results);
@@ -38,7 +38,7 @@ fiverrMeetRouter.get('/:id', (res, req) => {
         })
 });
 
-fiverrMeetRouter.get('user/:id', (res, req) => {
+fiverrMeetRouter.get('user/:id', (req, res) => {
     message.getFiverrMeetByUserId(req.params.id)
         .then((results) => {
             res.status(200).json(results);
@@ -49,7 +49,7 @@ fiverrMeetRouter.get('user/:id', (res, req) => {
         })
 });
 
-fiverrMeetRouter.get('/:id/user/:iduser', (res, req) => {
+fiverrMeetRouter.get('/:id/user/:iduser', (req, res) => {
     message.getOneFiverrMeetByUserId(req.params.id, req.params.iduser)
         .then((results) => {
             res.status(200).json(results);
