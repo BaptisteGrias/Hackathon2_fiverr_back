@@ -47,9 +47,9 @@ const getAllUsersByRegion = (region) => {
         .then(([results]) => results[0])
 }
 
-const getUserByConnection = (email, password) => {
+const getUserByConnection = (email) => {
     return db
-        .query('SELECT * FROM user u WHERE email=? AND password=?', [email, password])
+        .query('SELECT * FROM user u WHERE email=?', [email, password])
         .then(([results]) => results[0])
 }
 
