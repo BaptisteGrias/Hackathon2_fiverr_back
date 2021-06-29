@@ -47,9 +47,9 @@ const getAllUsersByRegion = (region) => {
         .then(([results]) => results[0])
 }
 
-const getUserByConnection = (email, password) => {
+const getOneUser = (email) => {
     return db
-        .query('SELECT * FROM user u WHERE email=? AND password=?', [email, password])
+        .query('SELECT * FROM user u WHERE email=?', [email])
         .then(([results]) => results[0])
 }
 
@@ -58,7 +58,7 @@ module.exports = {
     getUserById,
     getAllUsersByRegion,
     findByEmail,
-    getUserByConnection,
+    getOneUser,
     validate,
     update,
     create,
