@@ -38,12 +38,11 @@ userRouter.get('/', (req, res) => {
 
 userRouter.get('/:id', (req, res) => {
     user.getUserById(req.params.id)
-        .then((results) => {
-            res.status(200).json(results);
+        .then((result) => {
+            res.status(200).json(result);
         })
         .catch((err) => {
-            console.log(err);
-            res.status(500).send('Error fetch user')
+            res.status(500).send('Error fetch user');
         })
 });
 
