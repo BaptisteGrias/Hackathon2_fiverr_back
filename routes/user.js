@@ -1,64 +1,73 @@
-const userRouter = require('express').Router();
+const userRouter = require("express").Router();
 const user = require("../models/userModel");
 
+userRouter.get("/", (req, res) => {
+	const sqlFilters = [];
 
-userRouter.get('/', (req, res) => {
+	if (req.query && req.query.region) {
+		getAllUsersByRegion(req.query.region)
+			.then((results) => {
+				res.status(200).json(results);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(500).send("Error fetch all users");
+			});
+	} else {
+		user
+			.getAllUsers()
+			.then((results) => {
+				res.status(200).json(results);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(500).send("Error fetch all users");
+			});
+	}
 
-    const sqlFilters = [];
-
-    if(req.query && req.query.region){
-        getAllUsersByRegion(req.query.region)
-        .then((results) => {
-            res.status(200).json(results)
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).send('Error fetch all users')
-        })
-    } else {
-        user.getAllUsers()
-        .then((results) => {
-            res.status(200).json(results)
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).send('Error fetch all users')
-        })        
-    }
-
-    user.getAllUsers()
-        .then((results) => {
-            res.status(200).json(results);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).send('Error fetch all users')
-        })
+	user
+		.getAllUsers()
+		.then((results) => {
+			res.status(200).json(results);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send("Error fetch all users");
+		});
 });
 
-userRouter.get('/:id', (req, res) => {
-    user.getUserById(req.params.id)
-        .then((result) => {
-            res.status(200).json(result);
-        })
-        .catch((err) => {
-            res.status(500).send('Error fetch user');
-        })
+userRouter.get("/:id", (req, res) => {
+	user
+		.getUserById(req.params.id)
+		.then((results) => {
+			res.status(200).json(results);
+		})
+		.catch((err) => {
+			res.status(500).send("Error fetch user");
+		});
 });
 
+userRouter.post("/", (req, res) => {
+	const { name, firstname, email, password, region, skill, ville } = req.body;
 
-userRouter.post('/', (req, res) => {
-    const { name, firstname, email, password, region, skill, ville } = req.body;
-
-    user.create(name, firstname, email, password, region, skill, ville)
-        .then(([result]) => 
-        {
-            const userId = result.insertId;
-            res.status(201).json({ userId, name, firstname, email, password, region, skill, ville });
-        })
-        .catch((err) => {
-            res.status(500).send(`Error server: ${err.message}`)
-        });
-})
+	user
+		.create(name, firstname, email, password, region, skill, ville)
+		.then(([result]) => {
+			const userId = result.insertId;
+			res.status(201).json({
+				userId,
+				name,
+				firstname,
+				email,
+				password,
+				region,
+				skill,
+				ville,
+			});
+		})
+		.catch((err) => {
+			res.status(500).send(`Error server: ${err.message}`);
+		});
+});
 
 module.exports = userRouter;
