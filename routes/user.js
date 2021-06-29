@@ -1,5 +1,9 @@
 const userRouter = require("express").Router();
 const user = require("../models/userModel");
+const passport = require("passport");
+const passportLocal = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
+require("./PassportConfig")(passport);
 
 userRouter.get("/", (req, res) => {
 	const sqlFilters = [];
@@ -69,5 +73,42 @@ userRouter.post("/", (req, res) => {
 			res.status(500).send(`Error server: ${err.message}`);
 		});
 });
+
+userRouter.post("/login", function (req, res, next) {
+	passport.authenticate('local', function (err, user, info) {
+		if (err) { return next(err); }
+		if (!user) { return res.redirect('/login'); }
+		req.logIn(user, function (err) {
+			if (err) { return next(err); }
+			return res.redirect('/fiverr');
+		});
+	})(req, res, next);
+});
+
+userRouter.post("/register", (req, res) => {
+
+	const hashPassword = async (password) => {
+		return await bcrypt.hash(req.body.password, 10);
+	}
+
+	user.getOneUser({ email: req.body.email })
+
+		.then(([results]) => {
+			if (results.length) {
+				res.status(409).send('USER EXISTS');
+			} else {
+				const hashedPassword = hashPassword(req.body.password); // bcrypt.hash(req.body.password, 10).then();
+				user.create({ ...req.body, password: hashedPassword });
+			}
+		})
+		.catch((err) => {
+			res.status(500).send(`Error when registering: ${err.message}`);
+		});
+});
+
+userRouter.get("/user", (req, res) => {
+	res.send(req.user);
+});
+
 
 module.exports = userRouter;
