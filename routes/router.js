@@ -3,9 +3,10 @@ const messageRouter = require("./message");
 const fiverrMeetRouter = require("./fiverrMeet");
 
 const setupRoutes = (app) => {
-    app.use('/api/user', userRouter)
-    app.use('/api/message', messageRouter)
-    app.use('/api/fiverrmeet', fiverrMeetRouter)
+    app.use('/api/users', userRouter)
+    app.use('/api/messages', messageRouter)
+    app.use('/api/fiverrmeets', fiverrMeetRouter)
+    app.use('/api/friends', friendRouter)
 }
 
 
