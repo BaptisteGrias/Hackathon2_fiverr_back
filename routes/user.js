@@ -6,7 +6,7 @@ userRouter.get('/', (res, req) => {
 
     const sqlFilters = [];
 
-    if(req.query.region){
+    if(req.query && req.query.region){
         getAllUsersByRegion(req.query.region)
         .then((results) => {
             res.status(200).json(results)

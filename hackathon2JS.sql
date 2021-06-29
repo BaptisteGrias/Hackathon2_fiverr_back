@@ -77,6 +77,8 @@ INSERT INTO fiverrMeet(idfiverrMeet,name,region,idmeetingType,author_id,domaine,
 INSERT INTO meetingType(idmeetingType,name) VALUES(1,'Conférence');
 
 
+
 INSERT INTO user(iduser,name,firstname,email,password,region,skill,ville) VALUES(1,'Nicolas','Julien','juju45815@gmail.com','jujubg45','Occitanie','Web developer','Montpellier');
 
 INSERT INTO user(iduser,name,firstname,email,password,region,skill,ville) VALUES(2,'Bensouna','Sarah','chocolatelover@hotmail.com','sarahbg40','Nouvelle-Aquitaine','Web developer','Bayonne');
+
