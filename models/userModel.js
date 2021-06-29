@@ -1,4 +1,4 @@
-const connection = require('../../db_config');
+const connection = require('../db_config');
 const Joi = require('joi');
 
 const db = connection.promise();

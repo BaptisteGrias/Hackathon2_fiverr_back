@@ -1,4 +1,4 @@
-const connection = require('../../db_config');
+const connection = require('../db_config');
 
 const db = connection.promise();
 

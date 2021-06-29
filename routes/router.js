@@ -1,6 +1,7 @@
 const userRouter = require("./user");
 const messageRouter = require("./message");
 const fiverrMeetRouter = require("./fiverrMeet");
+const friendRouter = require("./friends");
 
 const setupRoutes = (app) => {
     app.use('/api/users', userRouter)
