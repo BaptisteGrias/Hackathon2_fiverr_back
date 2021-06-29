@@ -70,7 +70,7 @@ fiverrMeetRouter.post("/", (req, res) => {
 		})
 		.catch((err) => {
 			console.error(err);
-			res.status(500).send("Error saving the fiverr meet");
+			res.status(500).send(`Error saving the fiverr meet: ${err.message}`);
 		});
 });
 
