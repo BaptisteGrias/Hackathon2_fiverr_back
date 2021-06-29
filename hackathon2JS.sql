@@ -2,6 +2,7 @@
 /*!40014 SET FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET SQL_NOTES=0 */;
+DROP DATABASE IF EXISTS hackathon2JS;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ hackathon2JS /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE hackathon2JS;
 
@@ -57,13 +58,6 @@ CREATE TABLE `message` (
   CONSTRAINT `fk_message_user2` FOREIGN KEY (`iduser_dest`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-/* DROP TABLE IF EXISTS skill;
-CREATE TABLE `skill` (
-  `idskills` int NOT NULL,
-  `label` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idskills`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci; */
-
 DROP TABLE IF EXISTS user;
 CREATE TABLE `user` (
   `iduser` int NOT NULL,
@@ -83,5 +77,4 @@ INSERT INTO fiverrMeet(idfiverrMeet,name,region,idmeetingType,author_id,domaine,
 INSERT INTO meetingType(idmeetingType,name) VALUES(1,'Conférence');
 
 
-INSERT INTO skill(idskills,label) VALUES(1,'Developpeur Web');
 INSERT INTO user(iduser,name,firstname,email,password,region,skills_idskills,ville) VALUES(1,'Nicolas','Julien','juju45815@gmail.com','jujubg45','Occitanie',1,'Montpellier');
