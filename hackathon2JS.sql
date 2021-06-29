@@ -47,7 +47,7 @@ CREATE TABLE `message` (
   `idmessage` int NOT NULL,
   `title` varchar(45) DEFAULT NULL,
   `text` varchar(45) DEFAULT NULL,
-  `date` date NOT NULL, pas envie d arrêter :p
+  `date` date NOT NULL,
   `iduser_sender` int NOT NULL,
   `iduser_dest` int NOT NULL,
   PRIMARY KEY (`idmessage`,`iduser_sender`,`iduser_dest`),
@@ -72,7 +72,7 @@ CREATE TABLE `user` (
   `email` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
   `region` varchar(45) DEFAULT NULL,
-  `skills_idskills` int NOT NULL,
+  `skill` varchar(100) NOT NULL,
   `ville` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`iduser`,`skills_idskills`),
   KEY `fk_user_skills1_idx` (`skills_idskills`),
