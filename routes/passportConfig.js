@@ -1,11 +1,11 @@
-const User = require("../models/userModel");
+const User = require("./Mongoose/user");
 const bcrypt = require("bcryptjs");
 const localStrategy = require("passport-local").Strategy;
 
 module.exports = function (passport) {
     passport.use(
-        new localStrategy((email, password, done) => {
-            User.getOneUser((email), (err, user) => {
+        new localStrategy((username, password, done) => {
+            User.findOne({ username: username }, (err, user) => {
                 if (err) throw err;
                 if (!user) return done(null, false);
                 bcrypt.compare(password, user.password, (err, result) => {

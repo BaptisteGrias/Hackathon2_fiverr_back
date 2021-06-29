@@ -16,7 +16,8 @@ const validate = (data, forCreation = true) => {
 };
 
 const create = (name, firstname, email, password, region, skill, ville) => {
-    return db.query('INSERT INTO user (name, firstname, email, password, region, skill, ville) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, firstname, email, password, region, skill, ville]);
+    return db.query('INSERT INTO user SET ?', [name, firstname, email, password, region, skill, ville])
+        .then((result) => result);
 }
 
 const update = (id, newData) => {

@@ -3,7 +3,7 @@ const user = require("../models/userModel");
 const passport = require("passport");
 const passportLocal = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
-require("./PassportConfig")(passport);
+const User = require("./Mongoose/user");
 
 userRouter.get("/", (req, res) => {
 	const sqlFilters = [];
@@ -74,7 +74,45 @@ userRouter.post("/", (req, res) => {
 		});
 });
 
-userRouter.post("/login", function (req, res, next) {
+//----------------------------------------- MONGOOSE---------------------------------------------------
+
+userRouter.post("/login", (req, res, next) => {
+	passport.authenticate("local", (err, user, info) => {
+		if (err) throw err;
+		if (!user) res.send("No User Exists");
+		else {
+			req.logIn(user, (err) => {
+				if (err) throw err;
+				res.send("Successfully Authenticated");
+				console.log(req.user);
+			});
+		}
+	})(req, res, next);
+});
+
+userRouter.post("/register", (req, res) => {
+	User.findOne({ username: req.body.username }, async (err, doc) => {
+		if (err) throw err;
+		if (doc) res.send("User Already Exists");
+		if (!doc) {
+			const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+			const newUser = new User({
+				username: req.body.username,
+				password: hashedPassword,
+			});
+			console.log(newUser);
+			await newUser.save();
+			res.send("User Created");
+		}
+	});
+});
+
+userRouter.get("/user", (req, res) => {
+	res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+});
+
+/* userRouter.post("/login", function (req, res, next) {
 	passport.authenticate('local', function (err, user, info) {
 		if (err) { return next(err); }
 		if (!user) { return res.redirect('/login'); }
@@ -87,28 +125,33 @@ userRouter.post("/login", function (req, res, next) {
 
 userRouter.post("/register", (req, res) => {
 
-	const hashPassword = async (password) => {
-		return await bcrypt.hash(req.body.password, 10);
-	}
-
-	user.getOneUser({ email: req.body.email })
-
-		.then(([results]) => {
-			if (results.length) {
-				res.status(409).send('USER EXISTS');
-			} else {
-				const hashedPassword = hashPassword(req.body.password); // bcrypt.hash(req.body.password, 10).then();
-				user.create({ ...req.body, password: hashedPassword });
+	user.getOneUser(req.body.email)
+		.then((result) => {
+			if (result) {
+				return Promise.reject('USER_EXISTS');
 			}
+			return bcrypt.hash(req.body.password, 10);
+		})
+		.then((hashedPassword) => {
+			return user.create({ ...req.body, password: hashedPassword })
+		})
+		.then((result) => {
+			const userId = result.insertId
+			res.status(201).send({ userId, ...req.body });
 		})
 		.catch((err) => {
-			res.status(500).send(`Error when registering: ${err.message}`);
+			if (err === 'USER_EXISTS') {
+				res.status(409).send('USER EXISTS');
+			} else {
+				console.log(`Error when registering: ${err.message}`);
+				res.status(500).send(`Error when registering: ${err.message}`);
+			}
 		});
 });
 
 userRouter.get("/user", (req, res) => {
 	res.send(req.user);
 });
-
+ */
 
 module.exports = userRouter;
