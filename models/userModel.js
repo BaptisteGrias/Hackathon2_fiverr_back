@@ -15,6 +15,10 @@ const validate = (data, forCreation = true) => {
     }).validate(data, { abortEarly: false }).error;
 };
 
+const create = (name, firstname, email, password, region, skill, ville) => {
+    return db.query('INSERT INTO user (name, firstname, email, password, region, skill, ville) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, firstname, email, password, region, skill, ville]);
+}
+
 const update = (id, newData) => {
     return db.query('UPDATE user SET ? WHERE iduser = ?', [newData, id]);
 };
@@ -27,20 +31,35 @@ const getAllUsers = () => {
 
 const findByEmail = (email) => {
     return db
-        .query('SELECT * FROM User WHERE email = ?', [email])
+        .query('SELECT * FROM user WHERE email = ?', [email])
         .then(([results]) => results[0]);
 };
 
 const getUserById = (id) => {
     return db
-        .query('SELECT * FROM user u WHERE id=?', [id])
+        .query('SELECT * FROM user u WHERE iduser=?', [id])
+        .then(([results]) => results[0])
+}
+
+const getAllUsersByRegion = (region) => {
+    return db
+        .query('SELECT * FROM user u WHERE region=?', [region])
+        .then(([results]) => results[0])
+}
+
+const getUserByConnection = (email, password) => {
+    return db
+        .query('SELECT * FROM user u WHERE email=? AND password=?', [email, password])
         .then(([results]) => results[0])
 }
 
 module.exports = {
     getAllUsers,
     getUserById,
+    getAllUsersByRegion,
     findByEmail,
+    getUserByConnection,
     validate,
     update,
+    create,
 }

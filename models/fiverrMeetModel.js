@@ -13,7 +13,7 @@ const create = ({
     image,
 }) => {
     return db
-        .query('INSERT INTO fiverrMeet SET ?', {
+        .query('INSERT INTO fiverrMeet (name, region, idmeetingType, author_id, domaine, description, date, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', {
             name,
             region,
             idmeetingType,
@@ -24,13 +24,20 @@ const create = ({
             image,
         })
         .then(([result]) => {
-            return { name, region, description };
+            const fiverrMeetId = result.insertId;
+            return { fiverrMeetId, name, region, description };
         });
 };
 
 const update = (id, newData) => {
-    return db.query('UPDATE user SET ? WHERE idUser = ?', [newData, id]);
-};
+    return db.query('UPDATE user SET ? WHERE iduser = ?', [newData, id]);
+}
+
+const getFiverrMeetById = (id) => {
+    return db
+        .query('SELECT * FROM fiverrMeet f JOIN meetingType m ON m.idmeetingType=f.idmeetingType WHERE f.idfiverrMeet = ?', [id])
+        .then(([results]) => results)
+}
 
 const getFiverrMeetByUserId = (id) => {
     return db
@@ -44,9 +51,17 @@ const getOneFiverrMeetByUserId = (id, author_id) => {
         .then(([results]) => results)
 }
 
+const getAllFiverrMeetByRegion = (region) => {
+    return db
+        .query('SELECT * FROM fiverrMeet f WHERE region=?', [region])
+        .then(([results]) => results[0])
+}
+
 module.exports = {
     create,
     getFiverrMeetByUserId,
     getOneFiverrMeetByUserId,
+    getAllFiverrMeetByRegion,
+    getFiverrMeetById,
     update,
 };
