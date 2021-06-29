@@ -47,6 +47,7 @@ CREATE TABLE `message` (
   `idmessage` int NOT NULL,
   `title` varchar(45) DEFAULT NULL,
   `text` varchar(45) DEFAULT NULL,
+  `date` date NOT NULL, pas envie d arrêter :p
   `iduser_sender` int NOT NULL,
   `iduser_dest` int NOT NULL,
   PRIMARY KEY (`idmessage`,`iduser_sender`,`iduser_dest`),
@@ -56,12 +57,12 @@ CREATE TABLE `message` (
   CONSTRAINT `fk_message_user2` FOREIGN KEY (`iduser_dest`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS skill;
+/* DROP TABLE IF EXISTS skill;
 CREATE TABLE `skill` (
   `idskills` int NOT NULL,
   `label` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idskills`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci; */
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE `user` (
