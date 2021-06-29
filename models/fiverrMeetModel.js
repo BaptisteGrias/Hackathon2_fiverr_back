@@ -2,20 +2,9 @@ const connection = require("../db_config");
 
 const db = connection.promise();
 
-const create = ({
-	name,
-	region,
-	idmeetingType,
-	author_id,
-	domaine,
-	description,
-	date,
-	image,
-	ville,
-}) => {
+const create = ({ name, region, idmeetingType, author_id, domaine, description, date, image, ville }) => {
 	return db
-		.query(
-			"INSERT INTO fiverrMeet (name, region, idmeetingType, author_id, domaine, description, date, image, ville) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		.query("INSERT INTO fiverrMeet SET ?",
 			{
 				name,
 				region,
@@ -26,8 +15,7 @@ const create = ({
 				date,
 				image,
 				ville,
-			}
-		)
+			})
 		.then(([result]) => {
 			const fiverrMeetId = result.insertId;
 			return {

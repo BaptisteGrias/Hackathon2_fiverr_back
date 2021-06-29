@@ -63,8 +63,7 @@ fiverrMeetRouter.get("/:id/user/:iduser", (req, res) => {
 });
 
 fiverrMeetRouter.post("/", (req, res) => {
-	fiverrMeet
-		.create(req.body)
+	fiverrMeet.create(req.body)
 		.then((createdfiverrMeet) => {
 			res.status(201).json(createdfiverrMeet);
 		})
