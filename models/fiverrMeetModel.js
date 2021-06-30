@@ -43,7 +43,7 @@ const getFiverrMeetById = (id) => {
 			"SELECT * FROM fiverrMeet f JOIN meetingType m ON m.idmeetingType=f.idmeetingType WHERE f.idfiverrMeet = ?",
 			[id]
 		)
-		.then(([results]) => results);
+		.then(([results]) => results[0]);
 };
 
 const getFiverrMeetByUserId = (id) => {
