@@ -43,7 +43,7 @@ const getFiverrMeetById = (id) => {
 			"SELECT * FROM fiverrMeet f JOIN meetingType m ON m.idmeetingType=f.idmeetingType WHERE f.idfiverrMeet = ?",
 			[id]
 		)
-		.then(([results]) => results);
+		.then(([results]) => results[0]);
 };
 
 const getFiverrMeetByUserId = (id) => {
@@ -64,14 +64,16 @@ const getOneFiverrMeetByUserId = (id, author_id) => {
 		.then(([results]) => results);
 };
 
-const getAllFiverrMeet = (region) => {
-	return db.query("SELECT * FROM fiverrMeet f").then(([results]) => results[0]);
+const getAllFiverrMeet = () => {
+	return db
+		.query("SELECT * FROM fiverrMeet")
+		.then(([results]) => results);
 };
 
 const getAllFiverrMeetByRegion = (region) => {
 	return db
-		.query("SELECT * FROM fiverrMeet f WHERE region=?", [region])
-		.then(([results]) => results[0]);
+		.query("SELECT * FROM fiverrMeet WHERE region=?", [region])
+		.then(([results]) => results);
 };
 
 module.exports = {

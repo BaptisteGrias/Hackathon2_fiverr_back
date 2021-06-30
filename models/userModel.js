@@ -16,7 +16,8 @@ const validate = (data, forCreation = true) => {
 };
 
 const create = (name, firstname, email, password, region, skill, ville) => {
-    return db.query('INSERT INTO user (name, firstname, email, password, region, skill, ville) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, firstname, email, password, region, skill, ville]);
+    return db.query('INSERT INTO user SET ?', [name, firstname, email, password, region, skill, ville])
+        .then((result) => result);
 }
 
 const update = (id, newData) => {
@@ -44,12 +45,12 @@ const getUserById = (id) => {
 const getAllUsersByRegion = (region) => {
     return db
         .query('SELECT * FROM user u WHERE region=?', [region])
-        .then(([results]) => results[0])
+        .then(([results]) => results)
 }
 
-const getUserByConnection = (email, password) => {
+const getOneUser = (email) => {
     return db
-        .query('SELECT * FROM user u WHERE email=? AND password=?', [email, password])
+        .query('SELECT * FROM user u WHERE email=?', [email])
         .then(([results]) => results[0])
 }
 
@@ -58,7 +59,7 @@ module.exports = {
     getUserById,
     getAllUsersByRegion,
     findByEmail,
-    getUserByConnection,
+    getOneUser,
     validate,
     update,
     create,
